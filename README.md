@@ -27,8 +27,8 @@ Made by catsanddogs as a project.
 * requirements:
 * posix regex
 # getting posix regex
-If you check the `bin`, `lib`, and `include` folder.
-You will find the files required for the library
+* If you check the `bin`, `lib`, and `include` folder.\
+\You will find the files required for the library
 What to do?
 Just copy the files in each directory to the compilers path
 * you can also get it from this link http://gnuwin32.sourceforge.net/packages/regex.htm
