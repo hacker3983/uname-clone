@@ -139,7 +139,6 @@ void win_getarchitecture(struct win_utsname* __sys__) {
    PROCESSOR_AMD_X8664 (8664)
    PROCESSOR_ARM (Reserved)
 */
-
 // Gets system information stores information in structure win_utsname
 void win_uname(struct win_utsname* __sys__) {
 	WSADATA wsa;

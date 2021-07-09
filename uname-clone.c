@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <unistd.h>
-
+#define current_version "0.1"
 #if __has_include(<sys/utsname.h>)
 	#include <sys/utsname.h>
 #endif
@@ -52,7 +52,32 @@ void sysinit(sys* system) {
 
 bool help_exists(char** args, int count) {
 	for(int i=1;i<count;i++) {
-		if(strcmp(args[i], "--help") == 0) { return true; }
+		if(strcmp(args[i], "--help") == 0) {
+			printf("Usage: %s [OPTION]...\n", args[0]);
+			printf("Print certain system information.\n\n");
+			printf("  -a, --all\t\t\tprint all information\n");
+			printf("  -l, --list\t\t\tDoes the same as -a\n");
+			printf("  -s, --kernel-name\t\tprint the kernel name\n");
+			printf("  -n, --nodename\t\tprint the network node hostname\n");
+			printf("  -r, --kernel-release\t\tprint the kernel release\n");
+			printf("  -v, --kernel-version\t\tprint the kernel version\n");
+			printf("  -m, --machine\t\t\tprint the machine hardware name\n");
+			#if _WIN32
+			printf("  -p, --processor\t\tprint the processor type (non-portable)\n");
+			#endif
+			printf("  -i, --hardware-platform\tprint the hardware platform (non-portable)\n");
+			printf("  -o, --operating-system\tprint the operating system\n");
+			printf("      --help     display this help and exit\n");
+			printf("      --version  output version information and exit\n\n");
+			printf("Note:\n");
+			printf("Not a official command.\n");
+			printf("Not made to harm anyone\n");
+			printf("Made by catsanddogs as a project.\n");
+			return true;
+		} else if(strcmp(args[i], "--version") == 0) {
+			printf("uname-clone %s\nWritten By Catsanddogs\n", current_version);
+			return true;
+		}
 	}
 	return false;
 }
@@ -93,6 +118,7 @@ void parseexec_args(sys system, char** args, int count) {
 		else if(strcmp(args[i], opt_args[14]) == 0 || strcmp(args[i], opt_args[15]) == 0) printf("%s ", system.machine);
 		else if(strcmp(args[i], opt_args[16]) == 0 || strcmp(args[i], opt_args[17]) == 0) printf("%s ", system.machine);
 		else if(strcmp(args[i], opt_args[18]) == 0 || strcmp(args[i], opt_args[19]) == 0) printf("%s ", system.osname);
+		else { printf("Invalid option '%s'\n", args[i]); }
 	}
 	if(!yes) printf("\n");
 }
@@ -101,26 +127,7 @@ void sys_getinfo(char** args, int count, sys system) {
 	if(count < 2) {
 		printf("%s\n", system.osname);
 	} else {
-		if(help_exists(args, count)) {
-				printf("Usage: %s [OPTION]...\n", args[0]);
-				printf("Print certain system information.\n\n");
-				printf("  -a, --all\t\t\tprint all information\n");
-				printf("  -l, --list\t\t\tDoes the same as -a\n");
-				printf("  -s, --kernel-name\t\tprint the kernel name\n");
-				printf("  -n, --nodename\t\tprint the network node hostname\n");
-				printf("  -r, --kernel-release\t\tprint the kernel release\n");
-				printf("  -v, --kernel-version\t\tprint the kernel version\n");
-				printf("  -m, --machine\t\t\tprint the machine hardware name\n");
-				printf("  -p, --processor\t\tprint the processor type (non-portable)\n");
-				printf("  -i, --hardware-platform\tprint the hardware platform (non-portable)\n");
-				printf("  -o, --operating-system\tprint the operating system\n");
-				printf("      --help     display this help and exit\n");
-				printf("      --version  output version information and exit\n\n");
-				printf("Note:\n");
-				printf("Not a official command.\n");
-				printf("Not made to harm anyone\n");
-				printf("Made by catsanddogs as a project.\n");
-		} else {
+		if(!help_exists(args, count)) {
 			parseexec_args(system, args, count);
 		}
 	}
